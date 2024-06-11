@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: marcacion
+    volumes:
+      - $HOME/docker_volumes/postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  marcacion:
+    build: .
+    volumes:
+      - ./src:/var/www/html
+    ports:
+      - "8080:80"
+    depends_on:
+      - postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=marcacion
+    links:
+      - postgres
+
+volumes:
+  postgres_data:
