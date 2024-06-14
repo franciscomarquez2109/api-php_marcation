@@ -11,3 +11,6 @@ COPY . /var/www/html/
 
 # Habilitar módulos de Apache si es necesario (mod_rewrite, etc.)
 RUN a2enmod rewrite
+
+# Exponer el puerto 80
+EXPOSE 80
