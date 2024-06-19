@@ -1,5 +1,5 @@
 <?php
-require_once '../models/m_employee.php';
+require_once '../models/employeeModel.php';
 require_once '../core/validator.php';
 
 class EmployeeController {

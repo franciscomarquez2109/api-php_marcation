@@ -12,8 +12,8 @@ class Router {
         ];
     }
 
-    public function add($method, $route, $controller, $action) {
-        $this->routes[$method][$route] = ['controller' => $controller, 'action' => $action];
+    public function add($method, $route, $controller, $nameController, $action) {
+        $this->routes[$method][$route] = ['controller' => $controller,'nameController' => $nameController, 'action' => $action];
     }
 
     public function dispatch($uri) {
@@ -22,12 +22,13 @@ class Router {
         
         foreach ($this->routes[$method] as $route => $handler) {
             if ($route == $uri) {
-                $controllerName = $handler['controller'];
+                $controllerName = $handler['nameController'];
+                $controller = $handler['controller'];
                 $actionName = $handler['action'];
-
-                require_once "../controllers/{$controllerName}.php";
-                $controller = new $controllerName();
-                $controller->{$actionName}();
+                
+                require_once "../controllers/{$controller}.php";
+                $obj = new $controllerName();
+                $obj->{$actionName}();
                 return;
             }
         }
