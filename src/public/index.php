@@ -21,4 +21,7 @@ $router->add('POST', 'marking/save', 'dailingRegistrationController', 'DialingRe
 $router->add('GET', 'events', 'dailyEventsController', 'DailyEventsController','get');
 $router->add('POST', 'events/save', 'dailyEventsController', 'DailyEventsController','save');
 
+//rutas de user
+$router->add('POST', 'user', 'usersController', 'UsersController','get');
+
 $router->dispatch($_SERVER['REQUEST_URI']);
