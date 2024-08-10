@@ -7,46 +7,48 @@ class UsersController {
         try {
             $usersModel = new UsersModel();
             $Validator = new Validator();
-            //definimos un arreglo de parametros
+    
+            // Leer el cuerpo de la solicitud como JSON
+            $data = json_decode(file_get_contents('php://input'), true);
+    
+            // Definimos un arreglo de parametros
             $params = [
-                'name'     => $_POST['username'] ?? null,
-                'password' => $_POST['password'] ?? null
+                'name'     => $data['name'] ?? null,
+                'password' => $data['password'] ?? null
             ];
-
-            //Validamos parametros indefinidos y obligatorios
+    
+            // Validamos parametros indefinidos y obligatorios
             $Validator->IssetParams($params);
-
-            //Validamos parametros vacios
+    
+            // Validamos parametros vacios
             $Validator->Emptyparams($params);
-
+    
             $usersModel->name = $params['name'];
             $usersModel->password = $params['password'];
-
+    
             $result = $usersModel->get();
             $list = array();
             
             if (!$result['success']) {
-                Response::json($result['success'],$result['msg'],[]);    
-            } 
-            else {
+                Response::json($result['success'], $result['msg'], []);    
+            } else {
                 foreach($result['payload'] as $row){
                     array_push(
                         $list,
-                        Array(
-                            'id'=>$row['id'],
-                            'username'=>$row['usuario']              
+                        array(
+                            'id' => $row['id'],
+                            'username' => $row['usuario']              
                         )
                     );
                 }
                 
-                Response::json($result['success'],$result['msg'],$list);
+                Response::json($result['success'], $result['msg'], $list);
             }
-
-            
+    
         } catch (Exception $e) {
-            Response::json(false,$e->getMessage(),null);
+            Response::json(false, $e->getMessage(), null);
         }
-    }
+    }    
 
     public function save(){
         try {

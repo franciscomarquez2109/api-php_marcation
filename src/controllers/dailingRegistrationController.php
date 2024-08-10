@@ -36,14 +36,13 @@ class DialingRegistrationController {
             $dialingRegistrationModel = new DailingRegistration();
             $Validator = new Validator();
 
+            // Leer el cuerpo de la solicitud como JSON
+            $data = json_decode(file_get_contents('php://input'), true);
+
             //definimos un arreglo de parametros
             $params = [
-                'id_employee'      => $_POST['id_employee'] ?? null,
-                'date' => $_POST['date'] ?? null,
-                'hour' => $_POST['hour'] ?? null,
-                'id_type' => $_POST['id_type'] ?? null,
-                'id_state' => $_POST['id_state'] ?? null,
-                'location' => $_POST['location'] ?? null
+                'id_employee'   => $data['id_employee'] ?? null,
+                'location'      => $data['location'] ?? null
             ];
 
             //Validamos parametros indefinidos y obligatorios
@@ -53,10 +52,6 @@ class DialingRegistrationController {
             $Validator->Emptyparams($params);
             
             $dialingRegistrationModel->id_employee = $params['id_employee'];
-            $dialingRegistrationModel->date = $params['date'];
-            $dialingRegistrationModel->hour = $params['hour'];
-            $dialingRegistrationModel->id_type = $params['id_type'];
-            $dialingRegistrationModel->id_state = $params['id_state'];
             $dialingRegistrationModel->location = $params['location'];
             
             $resp = $dialingRegistrationModel->save();

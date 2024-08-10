@@ -46,17 +46,52 @@ class DailingRegistration {
 
     public function save(){
         $sql = "
-            INSERT INTO public.registro_marcacion
-                (id_empleado, fecha, hora, id_estado, ubicacion,id_tipo)
-            VALUES(:id_employee, :date, :hour, :id_state, :location,:id_type)";
+            insert
+	into
+	public.registro_marcacion(
+	id_empleado,
+	fecha,
+	hora,
+	id_estado,
+	ubicacion,
+	id_tipo)
+values(
+1,
+(
+select
+	now()::date),
+(
+select
+	now()::time),
+1,
+:location,
+(
+select 
+	case
+		when (
+		select
+			id_tipo
+		from
+			registro_marcacion rm
+		where
+			rm.fecha = now()::date
+			and rm.id_empleado = :id_employee order by hora desc limit 1) = 1
+		then 3
+		when (
+		select
+			id_tipo
+		from
+			registro_marcacion rm
+		where
+			rm.fecha = now()::date
+			and rm.id_empleado = :id_employee order by hora desc limit 1) is null
+		then 1
+		else 1
+	end))";
 
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':id_employee', $this->id_employee);
-        $stmt->bindParam(':date', $this->date);
-        $stmt->bindParam(':hour', $this->hour);
-        $stmt->bindParam(':id_state', $this->id_state);
         $stmt->bindParam(':location', $this->location);
-        $stmt->bindParam(':id_type', $this->id_type);
         if ($stmt->execute()) {
             return Response::payload(true,'Registro Exitoso',null);
         }else{
