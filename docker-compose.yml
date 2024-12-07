@@ -6,14 +6,13 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: marcacion
+      POSTGRES_DB: diocesis
     volumes:
-      - $HOME/docker_volumes/postgres_data:/var/lib/postgresql/data
-      - ./marcacion.sql:/docker-entrypoint-initdb.d/marcacion.sql
+      - $HOME/docker_volumes/pg_data_diocesis:/var/lib/postgresql/data
     ports:
       - "5432:5432"
 
-  marcacion:
+  serve:
     build: .
     volumes:
       - ./src:/var/www/html
@@ -24,7 +23,7 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=marcacion
+      - POSTGRES_DB=diocesis
     links:
       - postgres
 

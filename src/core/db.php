@@ -1,7 +1,7 @@
 <?php
 class Database {
     private $host = 'postgres';
-    private $db_name = 'marcacion';
+    private $db_name = 'diocesis';
     private $username = 'postgres';
     private $password = 'postgres';
     private $conn;

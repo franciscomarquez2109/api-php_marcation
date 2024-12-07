@@ -9,6 +9,10 @@ RUN apt-get update && apt-get install -y \
 # Copiar los archivos de la aplicación al directorio web de Apache
 COPY . /var/www/html/
 
+# Establecer permisos adecuados para los archivos y directorios
+RUN chown -R www-data:www-data /var/www/html \
+    && chmod -R 755 /var/www/html
+
 # Habilitar módulos de Apache si es necesario (mod_rewrite, etc.)
 RUN a2enmod rewrite
 

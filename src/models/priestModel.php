@@ -1,7 +1,7 @@
 <?php
 require_once '../core/db.php';
 
-class Employee {
+class Priest {
     private $conn;
     public $id_employee;
     public $name;
@@ -19,29 +19,27 @@ class Employee {
 
     }
 
-    public function get() {
-        $sql = "select 
-                    e.id_empleado,
-                    e.nombre,
-                    e.apellido,
-                    e.direccion,
-                    e.telefono,
-                    e.correo_electronico,
-                    c.nombre_cargo,
-                    d.nombre_departamento,
-                    e.estado
-                from 
-                    empleado e, 
-                    cargo c,
-                    departamento d 
-                where 
-                    e.id_departamento = d.id_departamento 
-                    and e.id_cargo = c.id_cargo
-                    and e.estado = 1";
-        $stmt = $this->conn->prepare($sql);
+    public function get(): array {
+        $sql = "select
+            p.nombres parroco_nombre,
+            p.foto,
+            p.nacimiento,
+            p.ordenacion,
+            p2.nombre parroquia,
+            pp.toma_posesion
+        from 
+            parroco p,
+            parroquia p2,
+            parroquia_parroco pp
+        where 
+            p.id = pp.parroco_id and 
+            p2.id = pp.parroquia_id and
+            pp.estatus = 1
+        order by p.nombres asc";
+        $stmt = $this->conn->prepare(query: $sql);
         $stmt->execute();
 
-        return Response::payload(true,null,$stmt->fetchAll(PDO::FETCH_ASSOC));
+        return Response::payload(success: true,msg: null,payload: $stmt->fetchAll(PDO::FETCH_ASSOC));
     }
 
     public function save(){

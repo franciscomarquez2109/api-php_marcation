@@ -50,7 +50,7 @@ class UsersController {
         }
     }    
 
-    public function save(){
+    /* public function save(){
         try {
             $employeeModel = new Employee();
             $Validator = new Validator();
@@ -156,5 +156,5 @@ class UsersController {
             echo "Error: " . $e->getMessage();
         }
 
-    }
+    } */
 }

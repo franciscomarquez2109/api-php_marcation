@@ -1,11 +1,11 @@
 <?php
-require_once '../models/employeeModel.php';
+require_once '../models/priestModel.php';
 require_once '../core/validator.php';
 
-class EmployeeController {
-    public function get() {
+class PriestController {
+    public function get(): void {
         try {
-            $employeeModel = new Employee();
+            $employeeModel = new Priest();
             $result = $employeeModel->get();
             $list = array();
 
@@ -13,25 +13,24 @@ class EmployeeController {
                 array_push(
                     $list,
                     Array(
-                        'id'=>$row['id_empleado'],
-                        'name'=>$row['nombre'],
-                        'last_name'=>$row['apellido'],
-                        'phone'=>$row['telefono'],
-                        'location'=>$row['direccion'],
-                        'email'=>$row['correo_electronico'],
-                        'departament'=>$row['nombre_departamento'],
-                        'rol'=>$row['nombre_cargo']                    
+                        'priestName'   =>$row['parroco_nombre'],
+                        'photo'        =>$row['foto'],
+                        'birth'        =>$row['nacimiento'],
+                        'ordination'   =>$row['ordenacion'],
+                        'parish'       =>$row['parroquia'],
+                        'inauguration' =>$row['toma_posesion']                    
                     )
                 );
             }
-            
+
             Response::json($result['success'],$result['msg'],$list);
+
         } catch (Exception $e) {
             Response::json(false,$e->getMessage(),null);
         }
     }
 
-    public function save(){
+    /* public function save(){
         try {
             $employeeModel = new Employee();
             $Validator = new Validator();
@@ -137,5 +136,5 @@ class EmployeeController {
             echo "Error: " . $e->getMessage();
         }
 
-    }
+    } */
 }
