@@ -14,6 +14,7 @@ $router->add('GET', 'priest', 'priestController', 'PriestController','get');
 $router->add('GET', 'carousel', 'carouselController','CarouselController','get');
 $router->add('POST','carousel','carouselController','CarouselController','save');
 $router->add('PUT','carousel/{id}','carouselController','CarouselController','update');
+$router->add('DELETE','carousel/{id}','carouselController','CarouselController','delete');
 
 //rutas de user
 $router->add('POST', 'user', 'usersController', 'UsersController','get');

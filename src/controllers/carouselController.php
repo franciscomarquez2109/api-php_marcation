@@ -93,4 +93,16 @@ class CarouselController {
 
     }
 
+    public function delete($id){
+        try {
+            $carouselModel = new Carousel();
+            $carouselModel->id = $id;
+            $resp = $carouselModel->delete();
+            Response::json($resp['success'],$resp['msg'],$resp['payload']);
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+        }
+
+    }
+
 }

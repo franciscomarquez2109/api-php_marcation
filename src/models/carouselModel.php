@@ -17,7 +17,6 @@ class Carousel {
         $this->conn = $database->getConnection();
 
     }
-
     public function get() {
         $sql = "select
             c.titulo,
@@ -37,7 +36,6 @@ class Carousel {
 
         return Response::payload(true,null,$stmt->fetchAll(PDO::FETCH_ASSOC));
     }
-
     public function save(){
         $sql = "INSERT INTO PUBLIC.CARRUSEL
             (TITULO, DESCRIPCION, IMAGEN, ENLACE, ESTADO_ID)
@@ -57,7 +55,6 @@ class Carousel {
         }
         
     }
-
     public function update(){
         $sql = "UPDATE PUBLIC.CARRUSEL
                 SET TITULO=:title, 
@@ -79,6 +76,19 @@ class Carousel {
             return Response::payload(true,'Actualizado correctamente',null);
         }else{
             return Response::payload(false,'Error al actualizar',null);
+        }
+        
+    }
+    public function delete(){
+        $sql = "DELETE FROM CARRUSEL WHERE ID = :id";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':id', $this->id);
+
+        if ($stmt->execute()) {
+            return Response::payload(true,'Eliminado correctamente',null);
+        }else{
+            return Response::payload(false,'Error al eliminar',null);
         }
         
     }
