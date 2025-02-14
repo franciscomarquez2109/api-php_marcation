@@ -16,6 +16,10 @@ $router->add('POST','carousel','carouselController','CarouselController','save')
 $router->add('PUT','carousel/{id}','carouselController','CarouselController','update');
 $router->add('DELETE','carousel/{id}','carouselController','CarouselController','delete');
 
+//rutas noticias
+$router->add('GET', 'notices', 'noticeController','NoticeController','get');
+$router->add('POST', 'notice', 'noticeController','NoticeController','save');
+
 //rutas de user
 $router->add('POST', 'user', 'usersController', 'UsersController','get');
 

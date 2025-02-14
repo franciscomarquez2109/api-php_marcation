@@ -1,2 +1,2 @@
-# api-php_marcation
-API with php for location dialing management
+# api-diocesis
+API with php for manager diocesis
